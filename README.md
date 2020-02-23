@@ -1,3 +1,4 @@
 ## NetworkStructureAndCloudComputing
 #### Designed a Student Portal using REST API
-#### Deplo
+#### Deployed it on Amazon Elastic Beanstalk
+
