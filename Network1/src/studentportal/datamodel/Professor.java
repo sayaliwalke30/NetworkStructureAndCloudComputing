@@ -1,9 +1,12 @@
 package studentportal.datamodel;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIgnore;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
+@XmlRootElement
 @DynamoDBTable(tableName = "professor")
 public class Professor {
 	private String firstName;

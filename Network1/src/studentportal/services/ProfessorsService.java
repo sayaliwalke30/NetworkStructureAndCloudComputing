@@ -1,5 +1,9 @@
 package studentportal.services;
+import java.util.List;
+
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+
 import studentportal.DynamoDbConnector;
 import studentportal.datamodel.Professor;
 
@@ -24,26 +28,23 @@ public class ProfessorsService {
 		}
 
 	// Getting a list of all professor
-	/*public List<Professor> getAllProfessors() {
-		// Getting the list
-		ArrayList<Professor> list = new ArrayList<>();
-		for (Professor prof : prof_Map.values()) {
-			list.add(prof);
-		}
-		return list;
-	}*/
+	public List<Professor> getAllProfessors() {
+		return prof_Map.scan(Professor.class, new DynamoDBScanExpression());
+	}
 
 	
 
 	// Getting One Professor
-	/*public Professor getProfessor(String profId) {
-		Long key = Long.parseLong(profId);
-		// Simple HashKey Load
-		Professor prof2 = prof_Map.get(key);
-		System.out.println("Item retrieved:");
-		return prof2;
+	public Professor getProfessor(String profId) {
+		List<Professor> list=prof_Map.scan(Professor.class, new DynamoDBScanExpression());
+		for(Professor f:list) {
+			if(f.getProfessorId().equals(profId)) {
+				return f;
+			}
+		}
+		return null;
 	}
-	// Updating Professor Info
+	/*// Updating Professor Info
 		public Professor updateProfessorInformation(String profId, Professor prof) {
 			Long key = Long.parseLong(profId);
 			Professor oldProfObject = prof_Map.get(key);
