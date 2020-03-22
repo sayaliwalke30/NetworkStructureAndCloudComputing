@@ -1,6 +1,7 @@
 package studentportal.resources;
 
 import java.util.Date;
+
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -13,13 +14,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-
 import studentportal.datamodel.Professor;
-import studentportal.exception.ErrorResponse;
 import studentportal.exception.RecordNotFoundException;
 import studentportal.services.ProfessorsService;
 

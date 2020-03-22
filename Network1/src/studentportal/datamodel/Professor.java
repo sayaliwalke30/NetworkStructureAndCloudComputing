@@ -1,9 +1,10 @@
 package studentportal.datamodel;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIgnore;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
-import java.util.Date;
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement
+@DynamoDBTable(tableName = "professor")
 public class Professor {
 	private String firstName;
 	private String lastName;
@@ -23,22 +24,7 @@ public class Professor {
 		this.joiningDate = joiningDate;
 	}
 
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getDepartment() {
-		return department;
-	}
-
-	public void setDepartment(String department) {
-		this.department = department;
-	}
-
+	@DynamoDBHashKey(attributeName = "professorId")
 	public String getProfessorId() {
 		return professorId;
 	}
@@ -47,14 +33,16 @@ public class Professor {
 		this.professorId = professorId;
 	}
 
-	public String getJoiningDate() {
-		return joiningDate;
+	@DynamoDBAttribute(attributeName = "firstName")
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setJoiningDate(String joiningDate) {
-		this.joiningDate = joiningDate;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
+	@DynamoDBAttribute(attributeName = "lastName")
 	public String getLastName() {
 		return lastName;
 	}
@@ -63,6 +51,25 @@ public class Professor {
 		this.lastName = lastName;
 	}
 
+	@DynamoDBAttribute(attributeName = "department")
+	public String getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(String department) {
+		this.department = department;
+	}
+
+	@DynamoDBAttribute(attributeName = "joiningDate")
+	public String getJoiningDate() {
+		return joiningDate;
+	}
+
+	public void setJoiningDate(String joiningDate) {
+		this.joiningDate = joiningDate;
+	}
+
+	@DynamoDBIgnore
 	@Override
 	public String toString() {
 		return "ProfId=" + getProfessorId() + ", firstName=" + getFirstName() + ", department=" + getDepartment()
