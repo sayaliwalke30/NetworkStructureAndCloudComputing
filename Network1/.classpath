@@ -22,5 +22,23 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/SayaliGirish/.m2/repository/com/amazonaws/aws-java-sdk-core/1.11.256/aws-java-sdk-core-1.11.256.jar" sourcepath="C:/Users/SayaliGirish/.m2/repository/com/amazonaws/aws-java-sdk-core/1.11.256/aws-java-sdk-core-1.11.256-sources.jar">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="maven.groupId" value="com.amazonaws"/>
+			<attribute name="maven.artifactId" value="aws-java-sdk-core"/>
+			<attribute name="maven.version" value="1.11.256"/>
+			<attribute name="maven.scope" value="compile"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/SayaliGirish/.m2/repository/com/amazonaws/aws-java-sdk-dynamodb/1.11.256/aws-java-sdk-dynamodb-1.11.256.jar" sourcepath="C:/Users/SayaliGirish/.m2/repository/com/amazonaws/aws-java-sdk-dynamodb/1.11.256/aws-java-sdk-dynamodb-1.11.256-sources.jar">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="maven.groupId" value="com.amazonaws"/>
+			<attribute name="maven.artifactId" value="aws-java-sdk-dynamodb"/>
+			<attribute name="maven.version" value="1.11.256"/>
+			<attribute name="maven.scope" value="compile"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
