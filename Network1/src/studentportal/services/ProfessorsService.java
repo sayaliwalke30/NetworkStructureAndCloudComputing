@@ -1,4 +1,5 @@
 package studentportal.services;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
@@ -32,13 +33,12 @@ public class ProfessorsService {
 		return prof_Map.scan(Professor.class, new DynamoDBScanExpression());
 	}
 
-	
-
 	// Getting One Professor
 	public Professor getProfessor(String profId) {
-		List<Professor> list=prof_Map.scan(Professor.class, new DynamoDBScanExpression());
+		List<Professor> list = prof_Map.scan(Professor.class, new DynamoDBScanExpression());
 		for(Professor f:list) {
 			if(f.getProfessorId().equals(profId)) {
+				System.out.println("Found professor");
 				return f;
 			}
 		}
@@ -62,18 +62,18 @@ public class ProfessorsService {
 
 	}
 
-	
+	*/
 
 	// Get professors in a department
 	public List<Professor> getProfessorsByDepartment(String department) {
-		// Getting the list
-		ArrayList<Professor> list = new ArrayList<>();
-		for (Professor prof : prof_Map.values()) {
-			if (prof.getDepartment().equals(department)) {
-				list.add(prof);
+		List<Professor> list = getAllProfessors();
+		List<Professor> result = new ArrayList<>();
+		for (Professor prof : list) {
+			if(prof.getDepartment().equals(department)) {
+				result.add(prof);
 			}
 		}
-		return list;
-	}*/
+		return result ;
+	}
 
 }

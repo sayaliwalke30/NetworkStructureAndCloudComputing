@@ -58,20 +58,19 @@ public class ProfessorsResource {
 		}
 		return profService.getProfessor(profId);
 	}
-	/*
-	 * @GET
-	 * 
-	 * @Path("/{department}")
-	 * 
-	 * @Produces(MediaType.APPLICATION_JSON) public List<Professor>
-	 * getProfessorsByDeparment(
-	 * 
-	 * @QueryParam("department") String department) throws RecordNotFoundException {
-	 * if (department == null) { return profService.getAllProfessors(); } if(
-	 * profService.getProfessorsByDepartment(department).size() == 0) { throw new
-	 * RecordNotFoundException("Professor not found"); } return
-	 * profService.getProfessorsByDepartment(department); }
-	 */
+	
+	@GET
+	@Path("/{department}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Professor> getProfessorsByDepartment(
+			@QueryParam("department") String department) {
+		System.out.println("Department");
+		if (department == null) {
+			return profService.getAllProfessors();
+		}
+		return profService.getProfessorsByDepartment(department);
+		
+	}
 
 	/*
 	 * @DELETE
