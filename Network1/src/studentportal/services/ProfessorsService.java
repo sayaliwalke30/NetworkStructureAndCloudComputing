@@ -1,4 +1,5 @@
 package studentportal.services;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,9 +11,9 @@ import studentportal.datamodel.Professor;
 
 public class ProfessorsService {
 
-	//static HashMap<Long, Professor> prof_Map = InMemoryDatabase.getProfessorDB();
+	// static HashMap<Long, Professor> prof_Map = InMemoryDatabase.getProfessorDB();
 	static DynamoDbConnector dynamoDb;
-	DynamoDBMapper prof_Map; 
+	DynamoDBMapper prof_Map;
 
 	@SuppressWarnings("static-access")
 	public ProfessorsService() {
@@ -21,12 +22,13 @@ public class ProfessorsService {
 		prof_Map = new DynamoDBMapper(dynamoDb.getClient());
 		System.out.println("DynamoDb client initialized");
 	}
+
 	// Adding a professor
-		public void addProfessor(Professor professor) {
-			Long key = Long.parseLong(professor.getProfessorId());
-			System.out.print("Key is " + key);
-			prof_Map.save(professor);
-		}
+	public void addProfessor(Professor professor) {
+		Long key = Long.parseLong(professor.getProfessorId());
+		System.out.print("Key is " + key);
+		prof_Map.save(professor);
+	}
 
 	// Getting a list of all professor
 	public List<Professor> getAllProfessors() {
@@ -36,44 +38,38 @@ public class ProfessorsService {
 	// Getting One Professor
 	public Professor getProfessor(String profId) {
 		List<Professor> list = prof_Map.scan(Professor.class, new DynamoDBScanExpression());
-		for(Professor f:list) {
-			if(f.getProfessorId().equals(profId)) {
+		for (Professor f : list) {
+			if (f.getProfessorId().equals(profId)) {
 				System.out.println("Found professor");
 				return f;
 			}
 		}
 		return null;
 	}
-	/*// Updating Professor Info
-		public Professor updateProfessorInformation(String profId, Professor prof) {
-			Long key = Long.parseLong(profId);
-			Professor oldProfObject = prof_Map.get(key);
-			if (oldProfObject != null) {
-				oldProfObject = prof;
-				prof_Map.put(key, oldProfObject);
-			}
-			return oldProfObject;
-		}
-
-	// Deleting a professor
-	public Professor deleteProfessor(String profId) {
-		Long key = Long.parseLong(profId);
-		return prof_Map.remove(key);
-
-	}
-
-	*/
 
 	// Get professors in a department
 	public List<Professor> getProfessorsByDepartment(String department) {
-		List<Professor> list = getAllProfessors();
+		List<Professor> list = prof_Map.scan(Professor.class, new DynamoDBScanExpression());
 		List<Professor> result = new ArrayList<>();
-		for (Professor prof : list) {
-			if(prof.getDepartment().equals(department)) {
-				result.add(prof);
+		for (Professor f : list) {
+			if (f.getDepartment().equals(department)) {
+				System.out.println("Found professor");
+				result.add(f);
 			}
 		}
-		return result ;
+		return result;
 	}
+	/*
+	 * // Updating Professor Info public Professor updateProfessorInformation(String
+	 * profId, Professor prof) { Long key = Long.parseLong(profId); Professor
+	 * oldProfObject = prof_Map.get(key); if (oldProfObject != null) { oldProfObject
+	 * = prof; prof_Map.put(key, oldProfObject); } return oldProfObject; }
+	 * 
+	 * // Deleting a professor public Professor deleteProfessor(String profId) {
+	 * Long key = Long.parseLong(profId); return prof_Map.remove(key);
+	 * 
+	 * }
+	 * 
+	 */
 
 }

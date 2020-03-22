@@ -60,13 +60,13 @@ public class ProfessorsResource {
 	}
 	
 	@GET
-	@Path("/{department}")
+	@Path("/department/{department}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Professor> getProfessorsByDepartment(
-			@QueryParam("department") String department) {
-		System.out.println("Department");
-		if (department == null) {
-			return profService.getAllProfessors();
+			@PathParam("department") String department) throws RecordNotFoundException {
+		System.out.println("In get by department: Looking for: " + department);
+		if (profService. getProfessorsByDepartment(department) == null) {
+			throw new RecordNotFoundException("No professor found in the department");
 		}
 		return profService.getProfessorsByDepartment(department);
 		
