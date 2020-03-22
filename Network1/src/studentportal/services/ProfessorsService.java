@@ -1,24 +1,33 @@
 package studentportal.services;
 
 import java.util.ArrayList;
-
-import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import studentportal.DynamoDbConnector;
 import studentportal.InMemoryDatabase;
 import studentportal.datamodel.Professor;
 
 public class ProfessorsService {
 
 	static HashMap<Long, Professor> prof_Map = InMemoryDatabase.getProfessorDB();
+	static DynamoDbConnector dynamoDb;
+	DynamoDBMapper mapper; 
 
+	@SuppressWarnings("static-access")
 	public ProfessorsService() {
+		dynamoDb = new DynamoDbConnector();
+		dynamoDb.init();
+		mapper = new DynamoDBMapper(dynamoDb.getClient());
 	}
+	// Adding a professor
+		public Professor addProfessor(Professor professor) {
+			Long key = Long.parseLong(professor.getProfessorId());
+			System.out.print("Key is " + key);
+			return prof_Map.put(key, professor);
+		}
 
 	// Getting a list of all professor
-	// GET "..webapi/professors"
 	public List<Professor> getAllProfessors() {
 		// Getting the list
 		ArrayList<Professor> list = new ArrayList<>();
@@ -28,12 +37,7 @@ public class ProfessorsService {
 		return list;
 	}
 
-	// Adding a professor
-	public Professor addProfessor(Professor professor) {
-		Long key = Long.parseLong(professor.getProfessorId());
-		System.out.print("Key is " + key);
-		return prof_Map.put(key, professor);
-	}
+	
 
 	// Getting One Professor
 	public Professor getProfessor(String profId) {
@@ -43,6 +47,16 @@ public class ProfessorsService {
 		System.out.println("Item retrieved:");
 		return prof2;
 	}
+	// Updating Professor Info
+		public Professor updateProfessorInformation(String profId, Professor prof) {
+			Long key = Long.parseLong(profId);
+			Professor oldProfObject = prof_Map.get(key);
+			if (oldProfObject != null) {
+				oldProfObject = prof;
+				prof_Map.put(key, oldProfObject);
+			}
+			return oldProfObject;
+		}
 
 	// Deleting a professor
 	public Professor deleteProfessor(String profId) {
@@ -51,16 +65,7 @@ public class ProfessorsService {
 
 	}
 
-	// Updating Professor Info
-	public Professor updateProfessorInformation(String profId, Professor prof) {
-		Long key = Long.parseLong(profId);
-		Professor oldProfObject = prof_Map.get(key);
-		if (oldProfObject != null) {
-			oldProfObject = prof;
-			prof_Map.put(key, oldProfObject);
-		}
-		return oldProfObject;
-	}
+	
 
 	// Get professors in a department
 	public List<Professor> getProfessorsByDepartment(String department) {
