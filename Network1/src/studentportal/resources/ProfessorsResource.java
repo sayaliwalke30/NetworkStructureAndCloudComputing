@@ -28,7 +28,7 @@ public class ProfessorsResource {
     	profService = new ProfessorsService();
 	}
 	
-    @GET
+   /* @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Professor> getProfessors() throws RecordNotFoundException {
     	System.out.println("In get Professors");
@@ -65,7 +65,7 @@ public class ProfessorsResource {
 		return profService.getProfessor(profId);
 	}
 	
-	@DELETE
+	/*@DELETE
 	@Path("/{professorId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -76,17 +76,17 @@ public class ProfessorsResource {
 			throw new RecordNotFoundException("Prefessor to be deleted not found");
 		}
 		return prof;
-	}
+	}*/
 	
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Professor addProfessor(Professor prof) {
+	public void addProfessor(Professor prof) {
 			System.out.println("Posted object " + prof.toString());
-			return profService.addProfessor(prof);
+			profService.addProfessor(prof);
 	}
 	
-	@PUT
+	/*@PUT
 	@Path("/{professorId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -97,6 +97,6 @@ public class ProfessorsResource {
 			throw new RecordNotFoundException("Professor to be updated not found");
 		}
 		return professor;
-	}
+	}*/
 
  }

@@ -10,37 +10,38 @@ import studentportal.datamodel.Professor;
 
 public class ProfessorsService {
 
-	static HashMap<Long, Professor> prof_Map = InMemoryDatabase.getProfessorDB();
+	//static HashMap<Long, Professor> prof_Map = InMemoryDatabase.getProfessorDB();
 	static DynamoDbConnector dynamoDb;
-	DynamoDBMapper mapper; 
+	DynamoDBMapper prof_Map; 
 
 	@SuppressWarnings("static-access")
 	public ProfessorsService() {
 		dynamoDb = new DynamoDbConnector();
 		dynamoDb.init();
-		mapper = new DynamoDBMapper(dynamoDb.getClient());
+		prof_Map = new DynamoDBMapper(dynamoDb.getClient());
+		System.out.println("DynamoDb client initialized");
 	}
 	// Adding a professor
-		public Professor addProfessor(Professor professor) {
+		public void addProfessor(Professor professor) {
 			Long key = Long.parseLong(professor.getProfessorId());
 			System.out.print("Key is " + key);
-			return prof_Map.put(key, professor);
+			prof_Map.save(professor);
 		}
 
 	// Getting a list of all professor
-	public List<Professor> getAllProfessors() {
+	/*public List<Professor> getAllProfessors() {
 		// Getting the list
 		ArrayList<Professor> list = new ArrayList<>();
 		for (Professor prof : prof_Map.values()) {
 			list.add(prof);
 		}
 		return list;
-	}
+	}*/
 
 	
 
 	// Getting One Professor
-	public Professor getProfessor(String profId) {
+	/*public Professor getProfessor(String profId) {
 		Long key = Long.parseLong(profId);
 		// Simple HashKey Load
 		Professor prof2 = prof_Map.get(key);
@@ -77,6 +78,6 @@ public class ProfessorsService {
 			}
 		}
 		return list;
-	}
+	}*/
 
 }
