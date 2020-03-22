@@ -1,10 +1,13 @@
 package studentportal.services;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 
 import studentportal.DynamoDbConnector;
 import studentportal.datamodel.Professor;
@@ -59,17 +62,38 @@ public class ProfessorsService {
 		}
 		return result;
 	}
-	/*
-	 * // Updating Professor Info public Professor updateProfessorInformation(String
-	 * profId, Professor prof) { Long key = Long.parseLong(profId); Professor
-	 * oldProfObject = prof_Map.get(key); if (oldProfObject != null) { oldProfObject
-	 * = prof; prof_Map.put(key, oldProfObject); } return oldProfObject; }
-	 * 
-	 * // Deleting a professor public Professor deleteProfessor(String profId) {
-	 * Long key = Long.parseLong(profId); return prof_Map.remove(key);
-	 * 
-	 * }
-	 * 
-	 */
+	
+	  // Updating Professor Info 
+	  public Professor updateProfessorInformation(String professorId, Professor prof) 
+	  { 
+		Map<String, AttributeValue> map = new HashMap<>();
+		map.put(":professorId", new AttributeValue().withS(professorId));
+		DynamoDBScanExpression scanExpression=
+		new DynamoDBScanExpression().withFilterExpression("professorId=:professorId").withExpressionAttributeValues(map);
+		List<Professor> target = prof_Map.scan(Professor.class, scanExpression);
+		if(target.size()!=0) {
+			String Id = target.get(0).getProfessorId();
+			prof.setProfessorId(professorId);
+			prof_Map.save(prof);
+			return prof_Map.load(Professor.class,Id);
+		}
+		return null; }
+	  
+	  // Deleting a professor 
+	  public Professor deleteProfessor(String professorId) {
+		    Map<String, AttributeValue> map=new HashMap<>();
+			map.put(":professorId", new AttributeValue().withS(professorId));
+			DynamoDBScanExpression scanExpression=new DynamoDBScanExpression()
+					.withFilterExpression("professorId=:professorId").withExpressionAttributeValues(map);
+			List<Professor> target=prof_Map.scan(Professor.class, scanExpression);
+			if(target.size()!=0) {
+				prof_Map.delete(target.get(0));
+				return target.get(0);
+			}
+			return null;
+	  
+	  }
+	  
+	 
 
 }
