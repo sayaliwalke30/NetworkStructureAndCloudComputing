@@ -1,11 +1,6 @@
 package studentportal.services;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import studentportal.DynamoDbConnector;
-import studentportal.InMemoryDatabase;
 import studentportal.datamodel.Professor;
 
 public class ProfessorsService {
