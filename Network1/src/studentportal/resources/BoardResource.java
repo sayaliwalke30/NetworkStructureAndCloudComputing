@@ -17,44 +17,45 @@ import studentportal.services.BoardService;
 
 @Path("boards")
 public class BoardResource {
-	BoardService bs=new BoardService();
-	
-	//get
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Board> getAllBoards(){
-		return bs.getAllBoards();
-	}
-	
-	//get by boardId
-	@GET
-	@Path("/{boardId}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Board getOneBoard(@PathParam("boardId")String boardId) {
-		return bs.getOneBoard(boardId);
-	}
-	
-	//add new board
+	BoardService bs = new BoardService();
+
+	// add new board
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Board addBoard(Board b) {
 		return bs.addBoard(b);
 	}
-	
-	//delete
+
+	// get
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Board> getAllBoards() {
+		return bs.getAllBoards();
+	}
+
+	// get by boardId
+	@GET
+	@Path("/{boardId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Board getOneBoard(@PathParam("boardId") String boardId) {
+		return bs.getOneBoard(boardId);
+	}
+
+	// delete
 	@DELETE
 	@Path("/{boardId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Board deleteBoard(@PathParam("boardId")String boardId) {
+	public Board deleteBoard(@PathParam("boardId") String boardId) {
 		return bs.deleteBoard(boardId);
 	}
-	
-	//update
+
+	// update
 	@PUT
 	@Path("/{boardId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Board updateBoard(@PathParam("boardId")String boardId,Board b) {
+	public Board updateBoard(@PathParam("boardId") String boardId, Board b) {
 		return bs.updateBoard(boardId, b);
 	}
+}

@@ -11,77 +11,74 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import studentportal.DynamoDbConnector;
 import studentportal.datamodel.Board;
 
-
 public class BoardService {
 	static DynamoDbConnector dbConnector;
-	static DynamoDBMapper mapper;
-	
+	static DynamoDBMapper board_Map;
+
 	public BoardService() {
-		dbConnector=new DynamoDbConnector();
+		dbConnector = new DynamoDbConnector();
 		dbConnector.init();
-		mapper=new DynamoDBMapper(dbConnector.getClient());
+		board_Map = new DynamoDBMapper(dbConnector.getClient());
 	}
-	
-	//get all
-	public List<Board> getAllBoards(){
-		return mapper.scan(Board.class, new DynamoDBScanExpression());
-	}
-	
-	//get one
-	public Board getOneBoard(String boardId) {
-		Map<String,AttributeValue> eav=new HashMap<>();
-		eav.put(":boardId", new AttributeValue().withS(boardId));
-		DynamoDBScanExpression scanExpression=new DynamoDBScanExpression()
-				.withFilterExpression("boardId=:boardId").withExpressionAttributeValues(eav);
-		List<Board> result=mapper.scan(Board.class, scanExpression);
-		if(result.size()!=0) {
-			return result.get(0);
-		}
-		return null;
-	
-	}
-	
-	//add board
+
+	// add board
 	public Board addBoard(Board b) {
-		mapper.save(b);
-		return mapper.load(Board.class,b.getId());
+		board_Map.save(b);
+		return board_Map.load(Board.class, b.getId());
 	}
-	
+
 	public void addBoard(String boardId, String courseId) {
-		Board newBoard=new Board(boardId,courseId);
-		mapper.save(newBoard);
+		Board newBoard = new Board(boardId, courseId);
+		board_Map.save(newBoard);
 	}
-	
-	//update Board
-	public Board updateBoard(String boardId,Board b) {
-		Map<String,AttributeValue> eav=new HashMap<>();
+
+	// get all
+	public List<Board> getAllBoards() {
+		return board_Map.scan(Board.class, new DynamoDBScanExpression());
+	}
+
+	// get one
+	public Board getOneBoard(String boardId) {
+		Map<String, AttributeValue> eav = new HashMap<>();
 		eav.put(":boardId", new AttributeValue().withS(boardId));
-		DynamoDBScanExpression scanExpression=new DynamoDBScanExpression()
-				.withFilterExpression("boardId=:boardId").withExpressionAttributeValues(eav);
-		List<Board> result=mapper.scan(Board.class, scanExpression);
-		if(result.size()!=0) {
-			String Id=result.get(0).getId();
+		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression().withFilterExpression("boardId=:boardId")
+				.withExpressionAttributeValues(eav);
+		List<Board> result = board_Map.scan(Board.class, scanExpression);
+		if (result.size() != 0) {
+			return result.get(0);
+		}
+		return null;
+
+	}
+
+	// update Board
+	public Board updateBoard(String boardId, Board b) {
+		Map<String, AttributeValue> eav = new HashMap<>();
+		eav.put(":boardId", new AttributeValue().withS(boardId));
+		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression().withFilterExpression("boardId=:boardId")
+				.withExpressionAttributeValues(eav);
+		List<Board> result = board_Map.scan(Board.class, scanExpression);
+		if (result.size() != 0) {
+			String Id = result.get(0).getId();
 			b.setId(Id);
-			mapper.save(b);
-			return mapper.load(Board.class,Id);
+			board_Map.save(b);
+			return board_Map.load(Board.class, Id);
 		}
 		return null;
 	}
-	
-	//delete Board
+
+	// delete Board
 	public Board deleteBoard(String boardId) {
-		Map<String,AttributeValue> eav=new HashMap<>();
+		Map<String, AttributeValue> eav = new HashMap<>();
 		eav.put(":boardId", new AttributeValue().withS(boardId));
-		DynamoDBScanExpression scanExpression=new DynamoDBScanExpression()
-				.withFilterExpression("boardId=:boardId").withExpressionAttributeValues(eav);
-		List<Board> result=mapper.scan(Board.class, scanExpression);
-		if(result.size()!=0) {
-			mapper.delete(result.get(0));
+		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression().withFilterExpression("boardId=:boardId")
+				.withExpressionAttributeValues(eav);
+		List<Board> result = board_Map.scan(Board.class, scanExpression);
+		if (result.size() != 0) {
+			board_Map.delete(result.get(0));
 			return result.get(0);
 		}
 		return null;
 	}
 
-	
 }
-
