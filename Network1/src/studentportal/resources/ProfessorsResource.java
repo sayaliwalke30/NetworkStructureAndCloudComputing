@@ -92,6 +92,7 @@ public class ProfessorsResource {
 		if (prof == null) {
 			throw new RecordNotFoundException("Prefessor to be deleted not found");
 		}
+		
 		return prof;
 	}
 
