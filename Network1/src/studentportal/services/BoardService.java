@@ -9,6 +9,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import studentportal.DynamoDbConnector;
+import studentportal.datamodel.Board;
 
 
 public class BoardService {
@@ -51,20 +52,6 @@ public class BoardService {
 		mapper.save(newBoard);
 	}
 	
-	//delete Board
-	public Board deleteBoard(String boardId) {
-		Map<String,AttributeValue> eav=new HashMap<>();
-		eav.put(":boardId", new AttributeValue().withS(boardId));
-		DynamoDBScanExpression scanExpression=new DynamoDBScanExpression()
-				.withFilterExpression("boardId=:boardId").withExpressionAttributeValues(eav);
-		List<Board> result=mapper.scan(Board.class, scanExpression);
-		if(result.size()!=0) {
-			mapper.delete(result.get(0));
-			return result.get(0);
-		}
-		return null;
-	}
-	
 	//update Board
 	public Board updateBoard(String boardId,Board b) {
 		Map<String,AttributeValue> eav=new HashMap<>();
@@ -80,5 +67,21 @@ public class BoardService {
 		}
 		return null;
 	}
+	
+	//delete Board
+	public Board deleteBoard(String boardId) {
+		Map<String,AttributeValue> eav=new HashMap<>();
+		eav.put(":boardId", new AttributeValue().withS(boardId));
+		DynamoDBScanExpression scanExpression=new DynamoDBScanExpression()
+				.withFilterExpression("boardId=:boardId").withExpressionAttributeValues(eav);
+		List<Board> result=mapper.scan(Board.class, scanExpression);
+		if(result.size()!=0) {
+			mapper.delete(result.get(0));
+			return result.get(0);
+		}
+		return null;
+	}
+
+	
 }
 
