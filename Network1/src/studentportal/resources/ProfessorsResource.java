@@ -89,9 +89,9 @@ public class ProfessorsResource {
 	public Professor deleteProfessor(@PathParam("professorId") String profId) throws Exception {
 		Professor prof = profService.deleteProfessor(profId);
 
-		if (prof == null) {
-			throw new RecordNotFoundException("Prefessor to be deleted not found");
-		}
+//		if (prof == null) {
+//			throw new RecordNotFoundException("Prefessor to be deleted not found");
+//		}
 		
 		return prof;
 	}

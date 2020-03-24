@@ -14,6 +14,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import studentportal.datamodel.Announcements;
+import studentportal.services.AnnouncementService;
 
 
 

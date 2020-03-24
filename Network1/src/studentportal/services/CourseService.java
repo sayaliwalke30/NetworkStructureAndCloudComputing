@@ -28,16 +28,6 @@ public class CourseService {
 		System.out.println("DynamoDb client initialized");
 	}
 
-	/*// Adding a Course
-	public void addCourse(String courseId, String courseName, String professorId,String department) {
-		// Next Id
-//		long nextAvailableId = course_Map.size() + 1;
-		// Create a Course Object
-		Course course = new Course(courseId, courseName, professorId, department);
-		Long key = Long.parseLong(courseId);
-		course_Map.put(key, course);
-	}
-*/
 	public Course addCourse(Course course) {
 		Long key = Long.parseLong(course.getCourseId());
 		course_Map.save(course);
