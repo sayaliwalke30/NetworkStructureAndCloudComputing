@@ -103,7 +103,7 @@ public class CourseService {
 	}
 
 	// deleting course Info
-	public Course deleteCourse(String courseID) {
+	public Course deleteCourse(String courseId) {
 		Map<String, AttributeValue> map = new HashMap<>();
 		map.put(":courseId", new AttributeValue().withS(courseId));
 		DynamoDBScanExpression scanExpression=
