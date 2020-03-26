@@ -65,26 +65,21 @@ public class ProfessorsService {
 	}
 
 	// Updating Professor Info
-	public Professor updateProfessorInformation(String professorId, Professor prof) {
-		DynamoDBMapperConfig dynamoDBMapperConfig = new DynamoDBMapperConfig.Builder()
-				.withConsistentReads(DynamoDBMapperConfig.ConsistentReads.CONSISTENT)
-				.withSaveBehavior(DynamoDBMapperConfig.SaveBehavior.UPDATE).build();
-		Map<String, AttributeValue> map = new HashMap<>();
-		map.put(":professorId", new AttributeValue().withS(professorId));
-		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+	public Professor updateProfessorInformation(String profId, Professor prof) {
+		Map<String, AttributeValue> map=new HashMap<>();
+		map.put(":professorId", new AttributeValue().withS(profId));
+		DynamoDBScanExpression scanExpression=new DynamoDBScanExpression()
 				.withFilterExpression("professorId=:professorId").withExpressionAttributeValues(map);
-		List<Professor> target = prof_Map.scan(Professor.class, scanExpression);
-		if (target.size() != 0) {
-			for (Professor professor : target) {
-				if (professor.getProfessorId().equals(professorId)) {
-					System.out.println("Professor to be updated " + professorId);
-					prof_Map.save(prof, dynamoDBMapperConfig);
-				}
-			}
-			return prof;
+		List<Professor> target=prof_Map.scan(Professor.class, scanExpression);
+		if(target.size()!=0) {
+			String Id=target.get(0).getId();
+			prof.setId(Id);
+			prof_Map.save(prof);
+			return prof_Map.load(Professor.class,Id);
 		}
 		return null;
 	}
+
 
 	// Deleting a professor
 	public Professor deleteProfessor(String professorId) {
