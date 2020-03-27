@@ -14,6 +14,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import studentportal.datamodel.Course;
+import studentportal.datamodel.Professor;
 import studentportal.exception.RecordNotFoundException;
 import studentportal.services.CourseService;
 
@@ -52,6 +53,18 @@ public class CourseResource {
 			throw new RecordNotFoundException("Course not found");
 		}
 		return course;
+	}
+	@GET
+	@Path("/department/{department}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Course> getCourseByDepartment(@PathParam("department") String department)
+			throws RecordNotFoundException {
+		System.out.println("In get by department: Looking for: " + department);
+		if (courseservice.getCourseByDepartment(department) == null) {
+			throw new RecordNotFoundException("No professor found in the department");
+		}
+		return courseservice.getCourseByDepartment(department);
+
 	}
 
 	// get Course by professor

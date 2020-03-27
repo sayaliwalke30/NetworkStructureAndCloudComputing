@@ -16,15 +16,16 @@ import studentportal.datamodel.Course;
 import studentportal.datamodel.Professor;
 
 public class CourseService {
-	//static HashMap<Long, Course> course_Map = InMemoryDatabase.getCourseDB();
+	// static HashMap<Long, Course> course_Map = InMemoryDatabase.getCourseDB();
 	static DynamoDbConnector dynamoDb;
 	DynamoDBMapper course_Map;
-	
-	BoardService boardService=new BoardService();
+
+	BoardService boardService = new BoardService();
+
 	public CourseService() {
-		dynamoDb=new DynamoDbConnector();
+		dynamoDb = new DynamoDbConnector();
 		dynamoDb.init();
-		course_Map=new DynamoDBMapper(dynamoDb.getClient());
+		course_Map = new DynamoDBMapper(dynamoDb.getClient());
 		System.out.println("DynamoDb client initialized");
 	}
 
@@ -53,15 +54,16 @@ public class CourseService {
 	}
 
 	// get courses by a department
-	public Course getCourseByDepartment(String department) {
+	public List<Course> getCourseByDepartment(String department) {
 		List<Course> list = course_Map.scan(Course.class, new DynamoDBScanExpression());
+		List<Course> result = new ArrayList<>();
 		for (Course f : list) {
 			if (f.getDepartment().equals(department)) {
-				System.out.println("Found courses");
-				return f;
+				System.out.println("Found professor");
+				result.add(f);
 			}
 		}
-		return null;
+		return result;
 	}
 
 	// get courses by a professorID
@@ -80,14 +82,14 @@ public class CourseService {
 	public Course updateCourseInformation(String courseId, Course course) {
 		Map<String, AttributeValue> map = new HashMap<>();
 		map.put(":courseId", new AttributeValue().withS(courseId));
-		DynamoDBScanExpression scanExpression=
-		new DynamoDBScanExpression().withFilterExpression("courseId=:courseId").withExpressionAttributeValues(map);
+		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression().withFilterExpression("courseId=:courseId")
+				.withExpressionAttributeValues(map);
 		List<Course> target = course_Map.scan(Course.class, scanExpression);
-		if(target.size()!=0) {
+		if (target.size() != 0) {
 			String Id = target.get(0).getCourseId();
 			course.setCourseId(courseId);
 			course_Map.save(course);
-			return course_Map.load(Course.class,Id);
+			return course_Map.load(Course.class, Id);
 		}
 		return null;
 	}
@@ -96,14 +98,14 @@ public class CourseService {
 	public Course deleteCourse(String courseId) {
 		Map<String, AttributeValue> map = new HashMap<>();
 		map.put(":courseId", new AttributeValue().withS(courseId));
-		DynamoDBScanExpression scanExpression=
-		new DynamoDBScanExpression().withFilterExpression("courseId=:courseId").withExpressionAttributeValues(map);
+		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression().withFilterExpression("courseId=:courseId")
+				.withExpressionAttributeValues(map);
 		List<Course> target = course_Map.scan(Course.class, scanExpression);
-		if(target.size()!=0) {
-		course_Map.delete(target.get(0));
+		if (target.size() != 0) {
+			course_Map.delete(target.get(0));
 			return target.get(0);
 		}
 		return null;
-		
+
 	}
 }

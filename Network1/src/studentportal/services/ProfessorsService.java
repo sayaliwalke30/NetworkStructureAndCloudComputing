@@ -66,22 +66,21 @@ public class ProfessorsService {
 
 	// Updating Professor Info
 	public Professor updateProfessorInformation(String profId, Professor prof) {
-		Map<String, AttributeValue> map=new HashMap<>();
-		System.out.println("In update professor "+profId);
+		Map<String, AttributeValue> map = new HashMap<>();
+		System.out.println("In update professor " + profId);
 		map.put(":professorId", new AttributeValue().withS(profId));
-		DynamoDBScanExpression scanExpression=new DynamoDBScanExpression()
+		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
 				.withFilterExpression("professorId=:professorId").withExpressionAttributeValues(map);
-		List<Professor> target=prof_Map.scan(Professor.class, scanExpression);
-		if(target.size()!=0) {
-			String Id=target.get(0).getId();
+		List<Professor> target = prof_Map.scan(Professor.class, scanExpression);
+		if (target.size() != 0) {
+			String Id = target.get(0).getId();
 			System.out.println("The Id of given object is" + Id);
 			prof.setId(Id);
 			prof_Map.save(prof);
-			return prof_Map.load(Professor.class,Id);
+			return prof_Map.load(Professor.class, Id);
 		}
 		return null;
 	}
-
 
 	// Deleting a professor
 	public Professor deleteProfessor(String professorId) {
