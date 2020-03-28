@@ -29,8 +29,8 @@ public class CourseResource {
 	public Course addCourse(Course c) {
 		return courseservice.addCourse(c);
 	}
-	
-	//Get all the courses
+
+	// Get all the courses
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -54,6 +54,7 @@ public class CourseResource {
 		}
 		return course;
 	}
+
 	@GET
 	@Path("/department/{department}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -61,7 +62,7 @@ public class CourseResource {
 			throws RecordNotFoundException {
 		System.out.println("In get by department: Looking for: " + department);
 		if (courseservice.getCourseByDepartment(department) == null) {
-			throw new RecordNotFoundException("No professor found in the department");
+			throw new RecordNotFoundException("No courses found in the department");
 		}
 		return courseservice.getCourseByDepartment(department);
 

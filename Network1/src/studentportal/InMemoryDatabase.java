@@ -9,7 +9,6 @@ import studentportal.datamodel.Lecture;
 import studentportal.datamodel.Professor;
 import studentportal.datamodel.Program;
 import studentportal.datamodel.Student;
-import studentportal.datamodel.TeachingAssistant;
 
 public class InMemoryDatabase {
 
@@ -37,11 +36,7 @@ public class InMemoryDatabase {
 		return courseDB;
 	}
 	
-	private static HashMap<Long, TeachingAssistant> TADB = new HashMap<>();
 
-	public static HashMap<Long, TeachingAssistant> getTADB() {
-		return TADB;
-	}
 	private static HashMap<Long, Lecture> lectureDB = new HashMap<>();
 
 	public static HashMap<Long, Lecture> getLectureDB() {

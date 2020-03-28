@@ -3,67 +3,99 @@ package studentportal.services;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+
+import studentportal.DynamoDbConnector;
 import studentportal.InMemoryDatabase;
+import studentportal.datamodel.Professor;
 import studentportal.datamodel.Student;
 
 public class StudentService {
-	static HashMap<Long, Student> student_Map = InMemoryDatabase.getStudentDB();
+	static DynamoDbConnector dynamoDb;
+	DynamoDBMapper student_Map;
+
+	// static HashMap<Long, Student> student_Map = InMemoryDatabase.getStudentDB();
+	@SuppressWarnings("static-access")
+	public StudentService() {
+		dynamoDb = new DynamoDbConnector();
+		dynamoDb.init();
+		student_Map = new DynamoDBMapper(dynamoDb.getClient());
+		System.out.println("DynamoDb client initialized");
+	}
+
 	// Add Student information
-		public Student addStudent(Student student) {
-			Long key = Long.parseLong(student.getStudentID());
-			student_Map.put(key, student);
-			return student;
-		}
+	public void addStudent(Student student) {
+		Long key = Long.parseLong(student.getStudentID());
+		System.out.print("Key is " + key);
+		student_Map.save(student);
+	}
 
 	// get the list of all students
 	public List<Student> getAllStudents() {
-		ArrayList<Student> list = new ArrayList<>();
-		for (Student stu : student_Map.values()) {
-			list.add(stu);
-		}
-		return list;
+		return student_Map.scan(Student.class, new DynamoDBScanExpression());
 	}
 
 	// Get students in a Program
-	public List<Student> getStudentsByProgram(String ProgramId) {
+	public Student getStudentsByProgram(String ProgramId) {
 		// Getting the list
-		ArrayList<Student> list = new ArrayList<>();
-		for (Student student : student_Map.values()) {
-			if (student.getprogramID().equals(ProgramId)) {
-				list.add(student);
+		List<Student> list = student_Map.scan(Student.class, new DynamoDBScanExpression());
+		for (Student f : list) {
+			if (f.getStudentID().equals(ProgramId)) {
+				System.out.println("Found professor");
+				return f;
 			}
 		}
-		return list;
+		return null;
 	}
-	
+
 	// Getting one student
 	public Student getStudent(String studentID) {
 
-		// Simple HashKey Load
-		Long key = Long.parseLong(studentID);
-		Student student = student_Map.get(key);
-		System.out.println("Student Item retrieved:");
-
-		return student;
+		List<Student> list = student_Map.scan(Student.class, new DynamoDBScanExpression());
+		for (Student f : list) {
+			if (f.getStudentID().equals(studentID)) {
+				System.out.println("Found professor");
+				return f;
+			}
+		}
+		return null;
 	}
 
 	// Updating Student Info
 	public Student updateStudentInformation(String studentID, Student student) {
-		Long key = Long.parseLong(studentID);
-		Student oldStudentObject = student_Map.get(key);
-		if (oldStudentObject != null) {
-		oldStudentObject = student;
-		student_Map.put(key, oldStudentObject);
+		Map<String, AttributeValue> map = new HashMap<>();
+		System.out.println("In update student " + studentID);
+		map.put(":studentID", new AttributeValue().withS(studentID));
+		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+				.withFilterExpression("studentID=:studentID").withExpressionAttributeValues(map);
+		List<Student> target = student_Map.scan(Student.class, scanExpression);
+		if (target.size() != 0) {
+			String Id = target.get(0).getId();
+			System.out.println("The Id of given object is" + Id);
+			student.setId(Id);
+			student_Map.save(student);
+			return student_Map.load(Student.class, Id);
 		}
-		return oldStudentObject;
+		return null;
 	}
 
 	// Deleting a student
 	public Student deleteStudent(String studentID) {
-		Long key = Long.parseLong(studentID);
-		return student_Map.remove(key);
+		Map<String, AttributeValue> map = new HashMap<>();
+		System.out.println("In update student " + studentID);
+		map.put(":studentID", new AttributeValue().withS(studentID));
+		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+				.withFilterExpression("studentID=:studentID").withExpressionAttributeValues(map);
+		List<Student> target = student_Map.scan(Student.class, scanExpression);
+		if (target.size() != 0) {
+			student_Map.delete(target.get(0));
+			return target.get(0);
+		}
+		return null;
 	}
-
 
 }

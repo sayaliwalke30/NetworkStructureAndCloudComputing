@@ -86,8 +86,8 @@ public class CourseService {
 				.withExpressionAttributeValues(map);
 		List<Course> target = course_Map.scan(Course.class, scanExpression);
 		if (target.size() != 0) {
-			String Id = target.get(0).getCourseId();
-			course.setCourseId(courseId);
+			String Id = target.get(0).getId();
+			course.setId(Id);
 			course_Map.save(course);
 			return course_Map.load(Course.class, Id);
 		}
@@ -98,7 +98,8 @@ public class CourseService {
 	public Course deleteCourse(String courseId) {
 		Map<String, AttributeValue> map = new HashMap<>();
 		map.put(":courseId", new AttributeValue().withS(courseId));
-		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression().withFilterExpression("courseId=:courseId")
+		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+				.withFilterExpression("courseId=:courseId")
 				.withExpressionAttributeValues(map);
 		List<Course> target = course_Map.scan(Course.class, scanExpression);
 		if (target.size() != 0) {

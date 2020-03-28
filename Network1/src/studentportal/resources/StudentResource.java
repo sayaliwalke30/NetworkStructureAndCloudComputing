@@ -2,6 +2,7 @@ package studentportal.resources;
 
 import java.util.List;
 
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -10,7 +11,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import studentportal.datamodel.Student;
@@ -26,8 +26,8 @@ public class StudentResource {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Student addStudent(Student student) {
-		return studentService.addStudent(student);
+	public void addStudent(Student student) {
+		 studentService.addStudent(student);
 	}
 
 	// Get List of all students
@@ -46,7 +46,7 @@ public class StudentResource {
 	@Path("/studentbyprogram/{programId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public List<Student> getStudentsByProgram(@PathParam("programId") String programId) throws RecordNotFoundException {
+	public Student getStudentsByProgram(@PathParam("programId") String programId) throws RecordNotFoundException {
 		if (studentService.getStudentsByProgram(programId) == null) {
 			throw new RecordNotFoundException("Student not found");
 		}
