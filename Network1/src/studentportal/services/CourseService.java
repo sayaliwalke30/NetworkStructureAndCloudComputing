@@ -71,7 +71,7 @@ public class CourseService {
 		List<Course> list = course_Map.scan(Course.class, new DynamoDBScanExpression());
 		for (Course f : list) {
 			if (f.getProfessorId().equals(professorID)) {
-				System.out.println("Course taught by professor is:");
+				System.out.println("Found professor");
 				return f;
 			}
 		}
