@@ -59,7 +59,7 @@ public class BoardResource {
 		@Consumes(MediaType.APPLICATION_JSON)
 		public Board updateBoard(@PathParam("boardId") String boardId, Board b) throws RecordNotFoundException {
 			if (boardService.getAllBoards().size() == 0) {
-				throw new RecordNotFoundException("Board not found");
+				throw new RecordNotFoundException("Board to be updated not found");
 			}
 			return bs.updateBoard(boardId, b);
 		}
@@ -70,7 +70,7 @@ public class BoardResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Board deleteBoard(@PathParam("boardId") String boardId) throws RecordNotFoundException {
 		if (boardService.getAllBoards().size() == 0) {
-			throw new RecordNotFoundException("Board not found");
+			throw new RecordNotFoundException("Board to be deleted not found");
 		}
 		return bs.deleteBoard(boardId);
 	}
