@@ -20,6 +20,14 @@ import studentportal.services.ProgramService;
 @Path("/program")
 public class ProgramResource {
 	ProgramService programService = new ProgramService();
+	// Add program
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void addProgram(Program p) {
+		System.out.println("Posted object " + p.toString());
+		programService.addProgram(p);
+	}
 
 	// get all programs
 	@GET
@@ -57,12 +65,7 @@ public class ProgramResource {
 		return program;
 	}
 
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public void addProgram(Program p) {
-		programService.addProgram(p);
-	}
+	
 
 	// update
 	@PUT
