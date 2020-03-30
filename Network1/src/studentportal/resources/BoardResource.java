@@ -31,6 +31,7 @@ public class BoardResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Board addBoard(Board b) {
+		System.out.println("Posted object " + b.toString());
 		return bs.addBoard(b);
 	}
 
