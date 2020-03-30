@@ -13,6 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import studentportal.datamodel.Board;
+import studentportal.exception.RecordNotFoundException;
 import studentportal.services.BoardService;
 
 @Path("boards")
