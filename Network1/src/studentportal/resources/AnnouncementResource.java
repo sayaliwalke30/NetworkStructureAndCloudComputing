@@ -21,6 +21,13 @@ import studentportal.services.AnnouncementService;
 @Path("announcement")
 public class AnnouncementResource {
 	AnnouncementService a_Service=new AnnouncementService();
+	//POST
+		@POST
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public Announcements addAnnouncement(Announcements announce) {
+			return a_Service.addAnnouncement(announce);
+		}
 	
 	//GET
 	@GET
@@ -48,13 +55,7 @@ public class AnnouncementResource {
 		return a_Service.getAnnoucementsByBoard(boardId);
 	}
 	
-	//POST
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Announcements addAnnouncement(Announcements announce) {
-		return a_Service.addAnnouncement(announce);
-	}
+	
 	
 	//delete
 	@DELETE
