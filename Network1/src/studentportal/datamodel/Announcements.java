@@ -23,11 +23,12 @@ public class Announcements {
 	
 	
 	
-	public Announcements(String annoucementId, String boardId,String announcementText2) {
+	public Announcements(String annoucementId, String boardId, String title, String announcementText2) {
 		// TODO Auto-generated constructor stub
 		this.announcementId=annoucementId;
 		this.boardId=boardId;
 		this.announcementText=announcementText2;
+		this.title=title;
 	}
 
 
