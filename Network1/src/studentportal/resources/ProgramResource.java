@@ -51,6 +51,18 @@ public class ProgramResource {
 		}
 		return programService.getProgram(programId);
 	}
+	// update
+		@PUT
+		@Path("/{programId}")
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public Program updateProgram(@PathParam("programId") String programId, Program p) throws RecordNotFoundException {
+			Program program = programService.updateProgramInformation(programId, p);
+			if (program == null) {
+				throw new RecordNotFoundException("Program to be updated not found");
+			}
+			return program;
+		}
 
 	// Delete
 	@DELETE
@@ -67,17 +79,6 @@ public class ProgramResource {
 
 	
 
-	// update
-	@PUT
-	@Path("/{programId}")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Program updateProgram(@PathParam("programId") String programId, Program p) throws RecordNotFoundException {
-		Program program = programService.updateProgramInformation(programId, p);
-		if (program == null) {
-			throw new RecordNotFoundException("Program to be updated not found");
-		}
-		return program;
-	}
+	
 
 }

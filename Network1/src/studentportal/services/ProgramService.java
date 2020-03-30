@@ -69,7 +69,7 @@ public class ProgramService {
 	public Program updateProgramInformation(String programId, Program program) {
 		Map<String, AttributeValue> map = new HashMap<>();
 		System.out.println("In update program " + programId);
-		map.put(":pogramId", new AttributeValue().withS(programId));
+		map.put(":programId", new AttributeValue().withS(programId));
 		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
 				.withFilterExpression("programId=:programId").withExpressionAttributeValues(map);
 		List<Program> target = program_map.scan(Program.class, scanExpression);
