@@ -17,80 +17,60 @@ import studentportal.exception.RecordNotFoundException;
 import studentportal.services.AnnouncementService;
 import studentportal.services.BoardService;
 
-@Path("announcement")
+@Path("announcements")
 public class AnnouncementResource {
-	AnnouncementService a_service;
-
-	public AnnouncementResource() {
-		a_service = new AnnouncementService();
-	}
-
-	AnnouncementService bs = new AnnouncementService();
-
-	// POST
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public void addAnnouncement(Announcements announce) {
-		System.out.println("Posted object " + announce.toString());
-		a_service.addAnnouncement(announce);
-	}
-
-	// GET
+	AnnouncementService a_Service=new AnnouncementService();
+	
+	//GET
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Announcements> getAllAnnoucements() {
-		System.out.println("In get announcement");
-		return a_service.getAllAnnouncements();
+	public List<Announcements> getAllAnnoucements(){
+		return a_Service.getAllAnnouncements();
 	}
-
-	// get an announcement by annoucementid and boardid
+	
+	//get an announcement by annoucementid and boardid
 	@GET
 	@Path("/{boardId}_{announcementId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Announcements getOneAnnoucement(@PathParam("announcementId") String announcementId,
-			@PathParam("boardId") String boardId) throws RecordNotFoundException {
-		if (a_service.getAllAnnouncements().size() == 0) {
-			throw new RecordNotFoundException("Announcement not found");
-		}
-		return a_service.getOneAnnouncement(announcementId, boardId);
+	public Announcements getOneAnnoucement(@PathParam("announcementId")String announcementId,@PathParam("boardId")String boardId) {
+		return a_Service.getOneAnnouncement(announcementId, boardId);
 	}
-
-	// get announcements by boardId
+	
+	//get announcements by boardId
 	@GET
 	@Path("/board/{boardId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Announcements> getAnnouncementsByBoard(@PathParam("boardId") String boardId)
-			throws RecordNotFoundException {
-		if (a_service.getAllAnnouncements().size() == 0) {
-			throw new RecordNotFoundException("Announcement not found");
+	public List<Announcements> getAnnouncementsByBoard(@PathParam("boardId")String boardId){
+		if(boardId==null) {
+			return a_Service.getAllAnnouncements();
 		}
-		return a_service.getAnnoucementsByBoard(boardId);
+		return a_Service.getAnnoucementsByBoard(boardId);
 	}
-
-	// update
+	
+	//POST
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Announcements addAnnouncement(Announcements announce) {
+		return a_Service.addAnnouncement(announce);
+	}
+	
+	//delete
+	@DELETE
+	@Path("/{boardId}_{announcementId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Announcements deleteAnnoucement(@PathParam("announcementId")String announcementId,@PathParam("boardId")String boardId) {
+		return a_Service.deleteAnnouncement(announcementId, boardId);
+	}
+	
+	//update
 	@PUT
 	@Path("/{boardId}_{annoucementId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Announcements updateAnnouncement(@PathParam("announcementId") String announcementId,
-			@PathParam("boardId") String boardId, Announcements a) throws RecordNotFoundException {
-		if (a_service.getAllAnnouncements().size() == 0) {
-			throw new RecordNotFoundException("Announcement not found");
-		}
-		return a_service.updateAnnouncement(announcementId, boardId, a);
+	public Announcements updateAnnouncement(@PathParam("announcementId")String announcementId,@PathParam("boardId")String boardId,Announcements a) {
+		return a_Service.updateAnnouncement(announcementId, boardId, a);
 	}
-
-	// delete
-	@DELETE
-	@Path("/{boardId}_{announcementId}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Announcements deleteAnnoucement(@PathParam("announcementId") String announcementId,
-			@PathParam("boardId") String boardId) throws RecordNotFoundException {
-		if (a_service.getAllAnnouncements().size() == 0) {
-			throw new RecordNotFoundException("Announcement not found");
-		}
-		return a_service.deleteAnnouncement(announcementId, boardId);
-	}
-
+	
+	
 }
