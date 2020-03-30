@@ -89,7 +89,7 @@ public class StudentService {
 		System.out.println("In update student " + studentID);
 		map.put(":studentID", new AttributeValue().withS(studentID));
 		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
-				.withFilterExpression("studentID=:studentID").withExpressionAttributeValues(map);
+				.withFilterExpression("studentId=:studentID").withExpressionAttributeValues(map);
 		List<Student> target = student_Map.scan(Student.class, scanExpression);
 		if (target.size() != 0) {
 			student_Map.delete(target.get(0));
