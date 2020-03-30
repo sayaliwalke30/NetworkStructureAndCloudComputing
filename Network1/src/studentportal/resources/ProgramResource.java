@@ -60,8 +60,8 @@ public class ProgramResource {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Program addProgram(Program p) {
-		return programService.addProgram(p);
+	public void addProgram(Program p) {
+		programService.addProgram(p);
 	}
 
 	// update
