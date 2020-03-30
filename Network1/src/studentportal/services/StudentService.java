@@ -71,11 +71,11 @@ public class StudentService {
 		System.out.println("In update student " + studentID);
 		map.put(":studentID", new AttributeValue().withS(studentID));
 		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
-				.withFilterExpression("studentID=:studentID").withExpressionAttributeValues(map);
+				.withFilterExpression("studentId=:studentID").withExpressionAttributeValues(map);
 		List<Student> target = student_Map.scan(Student.class, scanExpression);
 		if (target.size() != 0) {
 			String Id = target.get(0).getId();
-			System.out.println("The Id of given object is" + Id);
+			System.out.println("The Id of given object is " + Id);
 			student.setId(Id);
 			student_Map.save(student);
 			return student_Map.load(Student.class, Id);
