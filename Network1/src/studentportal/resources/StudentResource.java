@@ -45,7 +45,7 @@ public class StudentResource {
 	@Path("/studentbyprogram/{programId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Student getStudentsByProgram(@PathParam("programId") String programId) throws RecordNotFoundException {
+	public List<Student> getStudentsByProgram(@PathParam("programId") String programId) throws RecordNotFoundException {
 		if (studentService.getStudentsByProgram(programId) == null) {
 			throw new RecordNotFoundException("Student not found");
 		}

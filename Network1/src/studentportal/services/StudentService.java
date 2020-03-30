@@ -45,7 +45,7 @@ public class StudentService {
 		List<Student> result = new ArrayList<>();
 		for (Student f : list) {
 			if (f.getprogramID().equals(ProgramId)) {
-				System.out.println("Found professor");
+				System.out.println("Found students");
 				result.add(f);
 			}
 		}
