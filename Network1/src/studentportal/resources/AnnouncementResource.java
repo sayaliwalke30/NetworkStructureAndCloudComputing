@@ -31,9 +31,9 @@ public class AnnouncementResource {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Announcements addAnnouncement(Announcements announce) {
+	public void addAnnouncement(Announcements announce) {
 		System.out.println("Posted object " + announce.toString());
-		return a_service.addAnnouncement(announce);
+		a_service.addAnnouncement(announce);
 	}
 
 	// GET
