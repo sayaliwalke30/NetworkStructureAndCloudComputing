@@ -2,7 +2,6 @@ package studentportal.resources;
 
 import java.util.List;
 
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -27,7 +26,7 @@ public class StudentResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void addStudent(Student student) {
-		 studentService.addStudent(student);
+		studentService.addStudent(student);
 	}
 
 	// Get List of all students
