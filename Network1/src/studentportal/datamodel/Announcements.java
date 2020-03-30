@@ -15,7 +15,6 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 public class Announcements {
 	private String Id;
 	private String announcementId;
-	private String title;
 	private String announcementText;
 	private String boardId;
 	
@@ -23,11 +22,11 @@ public class Announcements {
 	
 	
 	
-	public Announcements(String annoucementId, String boardId,String announcementText2) {
+	public Announcements(String annoucementId, String boardId,String announcementText) {
 		// TODO Auto-generated constructor stub
 		this.announcementId=annoucementId;
 		this.boardId=boardId;
-		this.announcementText=announcementText2;
+		this.announcementText=announcementText;
 	}
 
 
@@ -42,19 +41,8 @@ public class Announcements {
 		Id = id;
 	}
 
-	@DynamoDBAttribute(attributeName="title")
-	public String getTitle() {
-		return title;
-	}
-
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
 
 	@DynamoDBIndexRangeKey(attributeName="announcementId", globalSecondaryIndexName="boardId-annoucementId-index")
-	//@DynamoDBIndexRangeKey
 	public String getAnnouncementId() {
 		return announcementId;
 	}
@@ -62,13 +50,14 @@ public class Announcements {
 	public void setAnnouncementId(String announcementId) {
 		this.announcementId = announcementId;
 	}
+	
 	@DynamoDBAttribute(attributeName="announcementText")
-	public String getAnnnouncementText() {
+	public String getAnnouncementText() {
 		return announcementText;
 	}
 
-	public void setAnnnouncementText(String annnouncementText) {
-		this.announcementText = annnouncementText;
+	public void setAnnouncementText(String announcementText) {
+		this.announcementText = announcementText;
 	}
 
 	@DynamoDBIndexHashKey(attributeName="boardId",globalSecondaryIndexName="boardId-annoucementId-index")
@@ -83,7 +72,7 @@ public class Announcements {
 	@DynamoDBIgnore
 	@Override
 	public String toString() {
-		return "AnnoucementId:"+getAnnouncementId()+", Message:"+getAnnnouncementText();
+		return "AnnoucementId:"+getAnnouncementId()+", Message:"+getAnnouncementText();
 	}
 	
 }

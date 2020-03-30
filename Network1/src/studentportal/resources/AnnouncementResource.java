@@ -52,6 +52,7 @@ public class AnnouncementResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Announcements addAnnouncement(Announcements announce) {
+		System.out.println("The object "+ announce.toString());
 		return a_Service.addAnnouncement(announce);
 	}
 	

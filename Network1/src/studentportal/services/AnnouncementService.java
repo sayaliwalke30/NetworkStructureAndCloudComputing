@@ -66,9 +66,11 @@ public class AnnouncementService {
 	}
 	
 	public Announcements addAnnouncement(Announcements a) {
-		if(a.getAnnnouncementText().length()<=160) {
-			mapper.save(a);
-		}
+//		if(a.getAnnnouncementText().length()<=160) {
+//			System.out.println("The object " + a.toString());
+//			mapper.save(a);
+//		}
+		mapper.save(a);
 		return mapper.load(Announcements.class,a.getId());
 	}
 	
