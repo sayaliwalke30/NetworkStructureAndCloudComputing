@@ -26,6 +26,7 @@ public class StudentResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void addStudent(Student student) {
+		System.out.println("Posted object " + student.toString());
 		studentService.addStudent(student);
 	}
 
