@@ -55,9 +55,9 @@ public class AnnouncementService {
 	}
 
 	// add annoucements
-	public void addAnnouncement(String annoucementId, String boardId, String announcementText) {
+	public void addAnnouncement(String annoucementId, String boardId, String title, String announcementText) {
 		if (announcementText.length() <= 160) {
-			Announcements newAnn = new Announcements(annoucementId, boardId, announcementText);
+			Announcements newAnn = new Announcements(annoucementId, boardId, title, announcementText);
 			accnouncement_Map.save(newAnn);
 		} else
 			System.out.println("----Announcement Text oversize!");
