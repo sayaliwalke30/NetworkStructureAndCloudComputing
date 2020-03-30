@@ -16,7 +16,7 @@ import studentportal.datamodel.Board;
 import studentportal.exception.RecordNotFoundException;
 import studentportal.services.BoardService;
 
-@Path("boards")
+@Path("board")
 public class BoardResource {
 	BoardService bs = new BoardService();
 
