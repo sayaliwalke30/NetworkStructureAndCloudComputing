@@ -86,7 +86,7 @@ public class StudentService {
 	// Deleting a student
 	public Student deleteStudent(String studentID) {
 		Map<String, AttributeValue> map = new HashMap<>();
-		System.out.println("In update student " + studentID);
+		System.out.println("In delete student " + studentID);
 		map.put(":studentID", new AttributeValue().withS(studentID));
 		DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
 				.withFilterExpression("studentId=:studentID").withExpressionAttributeValues(map);
