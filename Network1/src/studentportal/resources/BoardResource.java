@@ -15,9 +15,15 @@ import javax.ws.rs.core.MediaType;
 import studentportal.datamodel.Board;
 import studentportal.exception.RecordNotFoundException;
 import studentportal.services.BoardService;
+import studentportal.services.ProfessorsService;
 
 @Path("board")
 public class BoardResource {
+	BoardService boardService;
+
+	public BoardResource() {
+		boardService = new BoardService();
+	}
 	BoardService bs = new BoardService();
 
 	// add new board
@@ -40,6 +46,9 @@ public class BoardResource {
 	@Path("/{boardId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Board getOneBoard(@PathParam("boardId") String boardId) {
+		if (BoardService.getAllBoards().size() == 0) {
+			throw new RecordNotFoundException("Professor not found");
+		}
 		return bs.getOneBoard(boardId);
 	}
 
