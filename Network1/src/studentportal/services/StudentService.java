@@ -1,6 +1,7 @@
 package studentportal.services;
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +11,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 
 import studentportal.DynamoDbConnector;
-import studentportal.InMemoryDatabase;
+
 import studentportal.datamodel.Professor;
 import studentportal.datamodel.Student;
 
