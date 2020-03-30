@@ -38,6 +38,7 @@ public class BoardResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Board> getAllBoards() {
+		
 		return bs.getAllBoards();
 	}
 
@@ -45,27 +46,34 @@ public class BoardResource {
 	@GET
 	@Path("/{boardId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Board getOneBoard(@PathParam("boardId") String boardId) {
-		if (BoardService.getAllBoards().size() == 0) {
-			throw new RecordNotFoundException("Professor not found");
+	public Board getOneBoard(@PathParam("boardId") String boardId) throws RecordNotFoundException {
+		if (boardService.getAllBoards().size() == 0) {
+			throw new RecordNotFoundException("Board not found");
 		}
 		return bs.getOneBoard(boardId);
 	}
+	// update
+		@PUT
+		@Path("/{boardId}")
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public Board updateBoard(@PathParam("boardId") String boardId, Board b) throws RecordNotFoundException {
+			if (boardService.getAllBoards().size() == 0) {
+				throw new RecordNotFoundException("Board not found");
+			}
+			return bs.updateBoard(boardId, b);
+		}
 
 	// delete
 	@DELETE
 	@Path("/{boardId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Board deleteBoard(@PathParam("boardId") String boardId) {
+	public Board deleteBoard(@PathParam("boardId") String boardId) throws RecordNotFoundException {
+		if (boardService.getAllBoards().size() == 0) {
+			throw new RecordNotFoundException("Board not found");
+		}
 		return bs.deleteBoard(boardId);
 	}
 
-	// update
-	@PUT
-	@Path("/{boardId}")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Board updateBoard(@PathParam("boardId") String boardId, Board b) {
-		return bs.updateBoard(boardId, b);
-	}
+	
 }
