@@ -18,7 +18,7 @@ import studentportal.services.AnnouncementService;
 
 
 
-@Path("announcements")
+@Path("announcement")
 public class AnnouncementResource {
 	AnnouncementService a_Service=new AnnouncementService();
 	
