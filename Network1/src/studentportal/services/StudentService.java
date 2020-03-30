@@ -40,16 +40,16 @@ public class StudentService {
 	}
 
 	// Get students in a Program
-	public Student getStudentsByProgram(String ProgramId) {
-		// Getting the list
+	public List<Student> getStudentsByProgram(String ProgramId) {
 		List<Student> list = student_Map.scan(Student.class, new DynamoDBScanExpression());
+		List<Student> result = new ArrayList<>();
 		for (Student f : list) {
-			if (f.getStudentID().equals(ProgramId)) {
+			if (f.getprogramID().equals(ProgramId)) {
 				System.out.println("Found professor");
-				return f;
+				result.add(f);
 			}
 		}
-		return null;
+		return result;
 	}
 
 	// Getting one student
@@ -58,7 +58,7 @@ public class StudentService {
 		List<Student> list = student_Map.scan(Student.class, new DynamoDBScanExpression());
 		for (Student f : list) {
 			if (f.getStudentID().equals(studentID)) {
-				System.out.println("Found professor");
+				System.out.println("Found student");
 				return f;
 			}
 		}
