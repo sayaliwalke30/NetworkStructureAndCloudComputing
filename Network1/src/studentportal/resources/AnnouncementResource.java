@@ -54,9 +54,14 @@ public class AnnouncementResource {
 		}
 		return a_Service.getAnnoucementsByBoard(boardId);
 	}
-	
-	
-	
+	//update
+		@PUT
+		@Path("/{boardId}_{annoucementId}")
+		@Produces(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_JSON)
+		public Announcements updateAnnouncement(@PathParam("announcementId")String announcementId,@PathParam("boardId")String boardId,Announcements a) {
+			return a_Service.updateAnnouncement(announcementId, boardId, a);
+		}
 	//delete
 	@DELETE
 	@Path("/{boardId}_{announcementId}")
@@ -65,14 +70,7 @@ public class AnnouncementResource {
 		return a_Service.deleteAnnouncement(announcementId, boardId);
 	}
 	
-	//update
-	@PUT
-	@Path("/{boardId}_{annoucementId}")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Announcements updateAnnouncement(@PathParam("announcementId")String announcementId,@PathParam("boardId")String boardId,Announcements a) {
-		return a_Service.updateAnnouncement(announcementId, boardId, a);
-	}
+	
 	
 	
 }
