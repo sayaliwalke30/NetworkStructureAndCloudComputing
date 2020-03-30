@@ -4,11 +4,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+
+import studentportal.DynamoDbConnector;
 import studentportal.InMemoryDatabase;
 import studentportal.datamodel.Program;
 
 public class ProgramService {
-	static HashMap<Long, Program> program_map = InMemoryDatabase.getProgramDB();
+	static DynamoDbConnector dynamoDb;
+	DynamoDBMapper program_map;
+	//static HashMap<Long, Program> program_map = InMemoryDatabase.getProgramDB();
 
 	// get the list of all programs
 	public List<Program> getAllPrograms() {
