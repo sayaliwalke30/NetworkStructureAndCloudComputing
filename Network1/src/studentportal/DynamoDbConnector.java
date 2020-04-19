@@ -1,30 +1,36 @@
 package studentportal;
+import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
+import com.amazonaws.auth.InstanceProfileCredentialsProvider;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 
 public class DynamoDbConnector {
-	static AmazonDynamoDB dynamoDb ;
-	 
-	 public static void init() {
-		 System.out.println(System.getenv("AWS_CREDENTIAL_PROFILES_FILE"));
-		if (dynamoDb == null) {
-		//ProfileCredentialsProvider credentialsProvider = new ProfileCredentialsProvider();
-		//credentialsProvider.getCredentials();
-		
-		dynamoDb = AmazonDynamoDBClientBuilder
-					.standard()
-					.withCredentials(DefaultAWSCredentialsProviderChain.getInstance())
-					.withRegion("us-west-2")
-					.build();		
-		System.out.println("I created the client");
-		} 
-
-	}
+static AmazonDynamoDB dynamoDb;
 	
-	 public AmazonDynamoDB getClient() {
-		 
-		 return dynamoDb;
-	 }
+	public static void init() {
+		if(dynamoDb==null) {
+		AWSCredentialsProvider cp;
+			try {
+			cp=new InstanceProfileCredentialsProvider(false);//cloud
+			cp.getCredentials();
+		}catch(Exception e) {
+			cp=new ProfileCredentialsProvider();//local 
+			cp.getCredentials();	
+		}
+			
+		
+		dynamoDb=AmazonDynamoDBClientBuilder
+				.standard()
+				.withCredentials(cp)
+				.withRegion("us-west-2")
+				.build();
+		System.out.println("Create client successful!");
+		}
+	}
+
+	public static AmazonDynamoDB getClient() {
+		return dynamoDb;
+	}
 }
