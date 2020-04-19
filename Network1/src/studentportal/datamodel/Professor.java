@@ -85,7 +85,6 @@ public class Professor {
 	public void setJoiningDate(String joiningDate) {
 		this.joiningDate = joiningDate;
 	}
-
 	@DynamoDBIgnore
 	@Override
 	public String toString() {
