@@ -33,7 +33,7 @@ public class Course {
 	}
 	
 
-	public Course(String courseId, String courseName, String professorId, String taId, String boardId, String department
+	public Course(String courseId, String courseName, String professorId, String taId, String department
 			) {
 		super();
 		this.courseId = courseId;
@@ -41,7 +41,6 @@ public class Course {
 		this.professorId = professorId;
 		this.taId = taId;
 		this.department = department;
-		this.boardId = boardId;
 	}
 
 	@DynamoDBHashKey(attributeName="id")
